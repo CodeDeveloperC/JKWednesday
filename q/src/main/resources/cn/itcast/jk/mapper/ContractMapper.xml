@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.itcast.jk.mapper.ContractMapper">
+    <resultMap type="cn.itcast.jk.domain.Contract" id="ContractRM">
+        <id property="id" column="CONTRACT_ID"/>
+        <result property="offeror" column="OFFEROR"/>
+        <result property="contractNo" column="CONTRACT_NO"/>
+        <result property="signingDate" column="SIGNING_DATE"/>
+        <result property="inputBy" column="INPUT_BY"/>
+        <result property="checkBy" column="CHECK_BY"/>
+        <result property="inspector" column="INSPECTOR"/>
+        <result property="totalAmount" column="TOTAL_AMOUNT"/>
+        <result property="importNum" column="IMPORT_NUM"/>
+        <result property="crequest" column="CREQUEST"/>
+        <result property="customerName" column="CUSTOM_NAME"/>
+        <result property="deliverPeriod" column="DELIVERY_PERIOD"/>
+        <result property="shipTime" column="SHIP_TIME"/>
+        <result property="tradeTerms" column="TRADE_TERMS"/>
+        <result property="remark" column="REMARK"/>
+        <result property="printStyle" column="PRINT_STYLE"/>
+        <result property="oldState" column="OLD_STATE"/>
+        <result property="state" column="STATE"/>
+        <result property="outState" column="OUT_STATE"/>
+
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createDept" column="CREATE_DEPT"/>
+        <result property="createTime" column="CREATE_TIME"/>
+    </resultMap>
+
+    <select id="find" parameterType="map" resultMap="ContractRM">
+        SELECT * from contract_c
+        WHERE 1=1
+    </select>
+
+    <select id="get" parameterType="string" resultMap="ContractRM">
+        SELECT * FROM contract_c WHERE CONTRACT_ID=#{pid}
+    </select>
+
+    <insert id="insert" parameterType="cn.itcast.jk.domain.Contract">
+        INSERT  INTO  contract_c
+        (
+            CONTRACT_ID , OFFEROR , CONTRACT_NO , SIGNING_DATE , INPUT_BY ,
+             CHECK_BY , INSPECTOR , TOTAL_AMOUNT, IMPORT_NUM , CREQUEST , CUSTOM_NAME ,DELIVERY_PERIOD, SHIP_TIME
+             , TRADE_TERMS , REMARK , PRINT_STYLE , OLD_STATE , STATE , OUT_STATE, CREATE_BY , CREATE_DEPT ,
+             CREATE_TIME
+         )
+        VALUES
+        (
+          #{id},
+          #{offeror},
+          #{contractNo},
+          #{signingDate},
+          #{inputBy},
+          #{checkBy},
+          #{inspector},
+          #{totalAmount},
+          #{importNum},
+          #{crequest},
+          #{customerName},
+           #{deliverPeriod},
+          #{shipTime},
+          #{tradeTerms},
+          #{remark},
+          #{printStyle},
+          #{oldState},
+          #{state},
+          #{outState},
+
+          #{createBy},
+          #{createDept},
+          #{createTime}
+        )
+    </insert>
+
+    <update id="update" parameterType="cn.itcast.jk.domain.Contract">
+        UPDATE contract_c
+        <set>
+            <if test="offeror!=null">OFFEROR=#{offeror},</if>
+            <if test="contractNo!=null">CONTRACT_NO=#{contractNo},</if>
+            <if test="signingDate!=null">SIGNING_DATE=#{signingDate},</if>
+            <if test="inputBy!=null">INPUT_BY=#{inputBy},</if>
+            <if test="checkBy!=null">CHECK_BY=#{checkBy},</if>
+            <if test="inspector!=null">INSPECTOR=#{inspector},</if>
+            <if test="totalAmount!=null">TOTAL_AMOUNT=#{totalAmount},</if>
+            <if test="importNum!=null">IMPORT_NUM=#{importNum},</if>
+            <if test="crequest!=null">CREQUEST=#{crequest},</if>
+            <if test="customerName!=null">CUSTOM_NAME=#{customerName},</if>
+            <if test="deliverPeriod!=null">DELIVERY_PERIOD=#{deliverPeriod},</if>
+            <if test="shipTime!=null">SHIP_TIME=#{shipTime},</if>
+            <if test="tradeTerms!=null">TRADE_TERMS=#{tradeTerms},</if>
+            <if test="remark!=null">REMARK=#{remark},</if>
+            <if test="printStyle!=null">PRINT_STYLE=#{printStyle},</if>
+            <if test="oldState!=null">OLD_STATE=#{oldState},</if>
+            <if test="state!=null">STATE=#{state},</if>
+            <if test="outState!=null">OUT_STATE=#{outState},</if>
+
+
+        </set>
+        where CONTRACT_ID=#{id}
+
+    </update>
+
+    <!--删除一条-->
+    <delete id="deleteById" parameterType="string">
+        DELETE FROM contract_c
+        where CONTRACT_ID=#{pid}
+    </delete>
+
+    <!--删除多条(一维字符串数组)-->
+    <delete id="delete" parameterType="string">
+        DELETE FROM contract_c
+        WHERE CONTRACT_ID IN
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--修改状态-->
+    <update id="updateState" parameterType="map">
+        UPDATE contract_c SET state = #{state}
+        WHERE CONTRACT_ID IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+</mapper>
