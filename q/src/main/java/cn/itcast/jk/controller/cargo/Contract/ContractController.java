@@ -43,7 +43,6 @@ public class ContractController extends BaseController {
     public String toupdate(String id, Model model) {
         Contract obj = contractService.get(id);
         model.addAttribute("obj", obj);
-
         return "/cargo/contract/JContractUpdate.jsp";
     }
 
@@ -51,6 +50,7 @@ public class ContractController extends BaseController {
     @RequestMapping("/cargo/contract/update.action")
     public String update(Contract contract) {
         contractService.update(contract);
+        System.out.println("/cargo/contract/update.action---------------");
         return "redirect:/cargo/contract/list.action";//转向列表的action
     }
 }
