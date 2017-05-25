@@ -28,7 +28,8 @@
     </resultMap>
 
     <select id="find" parameterType="map" resultMap="factoryRM">
-        select * from factory_c where 1=1;
+        select * from factory_c where 1=1
+        <if test="state!=null">and STATE=#{state}</if>
     </select>
 
     <!--此处的pid只是一个string类型，名字随便写，可以是id,pid只是强调名字可以随便写-->

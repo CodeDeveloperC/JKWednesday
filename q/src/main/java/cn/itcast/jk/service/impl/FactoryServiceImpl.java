@@ -7,11 +7,9 @@ import cn.itcast.jk.service.FactoryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.ObjectInput;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by root on 2017/5/22.
@@ -53,19 +51,26 @@ public class FactoryServiceImpl implements FactoryService {
 
     @Override
     public void start(Serializable[] ids) {
-        Map map=new HashMap();
-        map.put("state",1);     //1启用
-        map.put("ids",ids);
+        Map map = new HashMap();
+        map.put("state", 1);     //1启用
+        map.put("ids", ids);
 
         factoryDao.UpdateState(map);
     }
 
     @Override
     public void stop(Serializable[] ids) {
-        Map map=new HashMap();
-        map.put("state",0);     //0停用
-        map.put("ids",ids);
+        Map map = new HashMap();
+        map.put("state", 0);     //0停用
+        map.put("ids", ids);
 
         factoryDao.UpdateState(map);
+    }
+
+    @Override
+    public List<Factory> getFactoryList() {
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+        paraMap.put("state", 1);
+        return factoryDao.find(paraMap);
     }
 }

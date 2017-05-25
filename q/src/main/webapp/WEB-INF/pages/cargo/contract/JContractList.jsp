@@ -57,7 +57,7 @@
                         <td class="tableHeader">船期</td>
                         <td class="tableHeader">总金额</td>
                         <td class="tableHeader">状态</td>
-                        <%--<td class="tableHeader">操作</td>--%>
+                        <td class="tableHeader">操作</td>
                     </tr>
                     </thead>
                     <tbody class="tableBody">
@@ -80,8 +80,9 @@
                             <td>
                                 <c:if test="${o.state==1}"><font color="green">已上报</font></c:if>
                                 <c:if test="${o.state==0}">草稿</c:if>
-
                             </td>
+                            <%--此处用${o.id}，因为这个就是contract表，ID自然就是factory_contract_c中的contractId--%>
+                            <td><a href="${ctx}/cargo/contractProduct/tocreate.action?contractId=${o.id}" title="新增货物信息">[货物]</a></td>
                         </tr>
                     </c:forEach>
 

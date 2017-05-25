@@ -70,4 +70,20 @@ public class ContractController extends BaseController {
 
         return "/cargo/contract/JContractView.jsp";
     }
+
+    //上报
+    @RequestMapping("/cargo/contract/submit.action")
+    public String submit(String[] id){
+        contractService.submit(id);
+
+        return "redirect:/cargo/contract/list.action";//转向列表的action
+    }
+
+    //上报
+    @RequestMapping("/cargo/contract/cancel.action")
+    public String cancel(String[] id){
+        contractService.cancel(id);
+
+        return "redirect:/cargo/contract/list.action";//转向列表的action
+    }
 }
