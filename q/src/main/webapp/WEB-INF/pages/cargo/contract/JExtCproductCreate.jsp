@@ -12,7 +12,7 @@
 </head>
 <body>
 <form method="post">
-    <input type="hidden" name="contractId" value="${contractId}"/>
+    <input type="hidden" name="contractProductId" value="${contractProductId}"/>
     <div id="menubar">
         <div id="middleMenubar">
             <div id="innerMenubar">
@@ -31,7 +31,7 @@
         <div class="textbox-header">
             <div class="textbox-inner-header">
                 <div class="textbox-title">
-                    新增货物信息
+                    新增附件信息
                 </div>
             </div>
         </div>
@@ -56,9 +56,17 @@
                     </tr>
 
                     <tr>
+                        <td class="columnTitle_mustbe">分类：</td>
+                        <td class="tableContent">
+                            <select name="ctype">
+                                <option value="">--请选择--</option>
+                                <c:forEach items="${ctypeList}" var="cl">
+                                    <option value="${cl.orderNo}">${cl.name}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
                         <td class="columnTitle_mustbe">货物照片：</td>
                         <td class="tableContent"><input type="text" name="productImage"/></td>
-
                     </tr>
 
                     <tr>
@@ -73,17 +81,6 @@
                     </tr>
 
                     <tr>
-                        <td class="columnTitle_mustbe">装率：</td>
-                        <td class="tableContent">
-                            <input type="text" name="loadingRate"/></td>
-                        </td>
-                        <td class="columnTitle_mustbe">箱数：</td>
-                        <td class="tableContent">
-                            <input type="text" name="boxNum"/></td>
-                        </td>
-                    </tr>
-
-                    <tr>
                         <td class="columnTitle_mustbe">单价：</td>
                         <td class="tableContent"><input type="text" name="price"/></td>
                         <td class="columnTitle_mustbe">排序号：</td>
@@ -93,6 +90,8 @@
                     <tr>
                         <td class="columnTitle_mustbe">货物描述：</td>
                         <td class="tableContent"><textarea style="width: 120px;" name="productDesc"></textarea>
+                        <td class="columnTitle_mustbe">要求：</td>
+                        <td class="tableContent"><textarea style="width: 120px;" name="productRequest"></textarea>
                     </tr>
                 </table>
             </div>
@@ -105,7 +104,7 @@
         <div class="textbox-header">
             <div class="textbox-inner-header">
                 <div class="textbox-title">
-                    货物列表
+                    附件列表
                 </div>
             </div>
         </div>
@@ -122,8 +121,6 @@
                         <td class="tableHeader">货号</td>
                         <td class="tableHeader">数量</td>
                         <td class="tableHeader">包装单位</td>
-                        <td class="tableHeader">装率</td>
-                        <td class="tableHeader">箱数</td>
                         <td class="tableHeader">单价</td>
                         <td class="tableHeader">总金额</td>
                         <td class="tableHeader">操作</td>
@@ -139,14 +136,11 @@
                             <td>${o.productNo}</td>
                             <td>${o.cnumber}</td>
                             <td>${o.packingUnit}</td>
-                            <td>${o.loadingRate}</td>
-                            <td>${o.boxNum}</td>
                             <td>${o.price}</td>
                             <td>${o.amount}</td>
                             <td>
                                 <a href="toupdate.action?id=${o.id}">[修改]</a>
                                 <a href="deleteById.action?id=${o.id}">[删除]</a>
-                                <a href="${ctx}/cargo/extcproduct/tocreate.action?contractProductId=${o.id}" title="">[附件]</a>
                             </td>
                         </tr>
                     </c:forEach>
