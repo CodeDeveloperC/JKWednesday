@@ -99,24 +99,6 @@
         </div>
     </div>
 
-    <div id="menubar">
-        <div id="middleMenubar">
-            <div id="innerMenubar">
-                <div id="navMenubar">
-                    <ul>
-
-                        <li id="view"><a href="#" onclick="formSubmit('toview.action','_self');this.blur();">查看</a></li>
-                        <li id="new"><a href="#" onclick="formSubmit('tocreate.action','_self');this.blur();">新增</a></li>
-                        <li id="update"><a href="#" onclick="formSubmit('toupdate.action','_self');this.blur();">修改</a></li>
-                        <li id="delete"><a href="#" onclick="formSubmit('delete.action','_self');this.blur();">删除</a></li>
-                        <li id="new"><a href="#" onclick="formSubmit('submit.action','_self');this.blur();">上报</a></li>
-                        <li id="new"><a href="#" onclick="formSubmit('cancel.action','_self');this.blur();">取消</a></li>
-
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- 页面主体部分（列表等） -->
     <div class="textbox" id="centerTextbox">
