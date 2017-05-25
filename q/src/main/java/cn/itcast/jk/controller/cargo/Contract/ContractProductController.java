@@ -74,4 +74,12 @@ public class ContractProductController extends BaseController{
 
         return "redirect:/cargo/contractProduct/tocreate.action";
     }
+
+    //删除
+    @RequestMapping("cargo/contractProduct/deleteById.action")
+    public String deleteById(String id){
+        contractProductService.deleteById(id);
+
+        return "redirect:/cargo/contractProduct/tocreate.action";
+    }
 }
