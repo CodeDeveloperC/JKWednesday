@@ -19,7 +19,7 @@
                 <div id="navMenubar">
                     <ul>
                         <li id="save"><a href="#" onclick="formSubmit('insert.action','_self');">确定</a></li>
-                        <li id="back"><a href="list.action">返回</a></li>
+                        <li id="back"><a href="${ctx}/cargo/contract/list.action">返回</a></li>
                     </ul>
                 </div>
             </div>
@@ -126,6 +126,7 @@
                         <td class="tableHeader">箱数</td>
                         <td class="tableHeader">单价</td>
                         <td class="tableHeader">总金额</td>
+                        <td class="tableHeader">操作</td>
                     </tr>
                     </thead>
                     <tbody class="tableBody">
@@ -142,6 +143,9 @@
                             <td>${o.boxNum}</td>
                             <td>${o.price}</td>
                             <td>${o.amount}</td>
+                            <td>
+                                <a href="toupdate.action?id=${o.id}">[修改]</a>
+                            </td>
                         </tr>
                     </c:forEach>
 
