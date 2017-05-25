@@ -50,7 +50,24 @@ public class ContractController extends BaseController {
     @RequestMapping("/cargo/contract/update.action")
     public String update(Contract contract) {
         contractService.update(contract);
-        System.out.println("/cargo/contract/update.action---------------");
+
         return "redirect:/cargo/contract/list.action";//转向列表的action
+    }
+
+    //批量删除
+    @RequestMapping("/cargo/contract/delete.action")
+    public String delete(String[] id){
+        contractService.delete(id);
+
+        return "redirect:/cargo/contract/list.action";//转向列表的action
+    }
+
+    //查看
+    @RequestMapping("/cargo/contract/toview.action")
+    public String toview(String id, Model model) {
+        Contract obj = contractService.get(id);
+        model.addAttribute("obj", obj);
+
+        return "/cargo/contract/JContractView.jsp";
     }
 }
