@@ -4,6 +4,7 @@ import cn.itcast.jk.dao.ContractProductDao;
 import cn.itcast.jk.domain.ContractProduct;
 import cn.itcast.jk.pagination.Page;
 import cn.itcast.jk.service.ContractProductService;
+import cn.itcast.util.UtilFuns;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,7 +38,10 @@ public class ContractProductServiceImpl implements ContractProductService {
         contractProduct.setId(UUID.randomUUID().toString());//设置UUID
 
         //自动计算总金额，总金额=单价*数量
-        contractProduct.setAmount(contractProduct.getCnumber()*contractProduct.getPrice());
+        if(UtilFuns.isNotEmpty(contractProduct.getCnumber()) && UtilFuns.isNotEmpty(contractProduct.getPrice())){
+            contractProduct.setAmount(contractProduct.getCnumber()*contractProduct.getPrice());
+        }
+
 
         contractProductDao.insert(contractProduct);
     }
