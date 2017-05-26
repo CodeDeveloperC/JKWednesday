@@ -3,6 +3,7 @@ package cn.itcast.jk.controller.cargo.Contract;
 import cn.itcast.jk.controller.BaseController;
 import cn.itcast.jk.domain.Contract;
 import cn.itcast.jk.service.ContractService;
+import cn.itcast.jk.vo.ContractVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,7 +66,7 @@ public class ContractController extends BaseController {
     //查看
     @RequestMapping("/cargo/contract/toview.action")
     public String toview(String id, Model model) {
-        Contract obj = contractService.get(id);
+        ContractVO obj = contractService.view(id);
         model.addAttribute("obj", obj);
 
         return "/cargo/contract/JContractView.jsp";

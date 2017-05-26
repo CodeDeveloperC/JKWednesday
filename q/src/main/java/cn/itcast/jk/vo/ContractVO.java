@@ -1,12 +1,17 @@
-package cn.itcast.jk.domain;
+package cn.itcast.jk.vo;
+
+import cn.itcast.jk.domain.ContractProduct;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by root on 2017/5/24.
  */
-public class Contract {
+public class ContractVO {
     private String id;
+
+    private List<ContractProduct> contractProducts;
 
     private String cpnum;
     private String extnum;
@@ -225,5 +230,13 @@ public class Contract {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public List<ContractProduct> getContractProducts() {
+        return contractProducts;
+    }
+
+    public void setContractProducts(List<ContractProduct> contractProducts) {
+        this.contractProducts = contractProducts;
     }
 }

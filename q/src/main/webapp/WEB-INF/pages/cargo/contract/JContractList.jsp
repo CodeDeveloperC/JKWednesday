@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 
 
@@ -49,6 +50,7 @@
                         <td class="tableHeader">序号</td>
                         <td class="tableHeader">客户名称</td>
                         <td class="tableHeader">合同号</td>
+                        <td class="tableHeader">合同数/附件数</td>
                         <td class="tableHeader">制单人</td>
                         <td class="tableHeader">审单人</td>
                         <td class="tableHeader">验货员</td>
@@ -69,13 +71,14 @@
                             <td>${o.customerName}</td>
                             <td><a href="toview.action?id=${o.id}">${o.contractNo}</a></td>
                             <%--<td align="center">${o.factoryName}</td>--%>
+                            <td align="center">${o.cpnum}/${o.extnum}</td>
                             <td>${o.inputBy}</td>
                             <td>${o.checkBy}</td>
                             <td>${o.inspector}</td>
-                            <td>${o.shipTime}</td>
-                            <td>${o.signingDate}</td>
-                            <td>${o.deliverPeriod}</td>
 
+                            <td><fmt:formatDate value="${o.signingDate}" pattern="yyyy-MM-dd"/> </td>
+                            <td><fmt:formatDate value="${o.deliverPeriod}" pattern="yyyy-MM-dd"/> </td>
+                            <td><fmt:formatDate value="${o.shipTime}" pattern="yyyy-MM-dd"/> </td>
                             <td>${o.totalAmount}</td>
                             <td>
                                 <c:if test="${o.state==1}"><font color="green">已上报</font></c:if>
@@ -93,6 +96,8 @@
         </div>
 
     </div>
+
+
 </form>
 </body>
 </html>

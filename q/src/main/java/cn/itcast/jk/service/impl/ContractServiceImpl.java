@@ -6,6 +6,7 @@ import cn.itcast.jk.dao.ExtCproductDao;
 import cn.itcast.jk.domain.Contract;
 import cn.itcast.jk.pagination.Page;
 import cn.itcast.jk.service.ContractService;
+import cn.itcast.jk.vo.ContractVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,6 +38,11 @@ public class ContractServiceImpl implements ContractService {
 
     public Contract get(Serializable id) {
         return contractDao.get(id);
+    }
+
+    @Override
+    public ContractVO view(String contractId) {
+        return contractDao.view(contractId);
     }
 
     public void insert(Contract contract) {
