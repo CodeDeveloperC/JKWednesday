@@ -1,6 +1,7 @@
 package cn.itcast.jk.service.impl;
 
 import cn.itcast.jk.dao.ContractProductDao;
+import cn.itcast.jk.dao.ExtCproductDao;
 import cn.itcast.jk.domain.ContractProduct;
 import cn.itcast.jk.pagination.Page;
 import cn.itcast.jk.service.ContractProductService;
@@ -21,6 +22,8 @@ import java.util.UUID;
 public class ContractProductServiceImpl implements ContractProductService {
     @Resource
     ContractProductDao contractProductDao;//和@Autowired都是可以的，只是将contractDao注入进来
+    @Resource
+    ExtCproductDao extCproductDao;
 
     public List<ContractProduct> findPage(Page page) {
         return contractProductDao.findPage(page);
@@ -51,10 +54,13 @@ public class ContractProductServiceImpl implements ContractProductService {
     }
 
     public void deleteById(Serializable id) {
+        Serializable ids[] = {id};  //附件通过外键删除，所以删除的ID一样
+        extCproductDao.deleteByContractProductById(ids);    //删除这些货物下的所有附件
         contractProductDao.deleteById(id);
     }
 
     public void delete(Serializable[] ids) {
+        extCproductDao.deleteByContractProductById(ids);    //删除这些货物下的所有附件
         contractProductDao.delete(ids);
     }
 

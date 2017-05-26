@@ -59,6 +59,39 @@ public class ExtCproductController extends BaseController {
         return "redirect:/cargo/extcproduct/tocreate.action";
     }
 
+    //转向修改页面
+    @RequestMapping("/cargo/extcproduct/toupdate.action")
+    public String toupdate(String id,Model model){
+        ExtCproduct obj = extCproductService.get(id);
+        model.addAttribute("obj",obj);
 
+        //准备生产厂家下拉列表
+        List<Factory> factoryList=factoryService.getFactoryList();
+        model.addAttribute("factoryList",factoryList);
+
+        //准备分类下拉列表
+        List<SysCode> ctypeList=extCproductService.getCtypeList();
+        model.addAttribute("ctypeList",ctypeList);
+
+        return "/cargo/contract/JExtCproductUpdate.jsp";
+    }
+
+    //保存
+    @RequestMapping("/cargo/extcproduct/update.action")
+    public String update(ExtCproduct extCproduct,Model model){
+        extCproductService.update(extCproduct);
+        model.addAttribute("contractProductId",extCproduct.getContractProductId()); //传递主表ＩＤ
+
+        return "redirect:/cargo/extcproduct/tocreate.action";
+    }
+
+    //删除
+    @RequestMapping("/cargo/extcproduct/deleteById.action")
+    public String deleteById(String id,Model model,String contractProductId){
+        extCproductService.deleteById(id);
+        model.addAttribute("contractProductId",contractProductId);//为了转回来，知道是哪一个货物下面的
+
+        return "redirect:/cargo/extcproduct/tocreate.action";
+    }
 
 }

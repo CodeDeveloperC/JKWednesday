@@ -77,8 +77,9 @@ public class ContractProductController extends BaseController{
 
     //删除
     @RequestMapping("cargo/contractProduct/deleteById.action")
-    public String deleteById(String id){
+    public String deleteById(String id,String contractId,Model model){
         contractProductService.deleteById(id);
+        model.addAttribute("contractId",contractId);
 
         return "redirect:/cargo/contractProduct/tocreate.action";
     }

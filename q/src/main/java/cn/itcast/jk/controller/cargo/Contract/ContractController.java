@@ -79,7 +79,7 @@ public class ContractController extends BaseController {
         return "redirect:/cargo/contract/list.action";//转向列表的action
     }
 
-    //上报
+    //取消
     @RequestMapping("/cargo/contract/cancel.action")
     public String cancel(String[] id){
         contractService.cancel(id);

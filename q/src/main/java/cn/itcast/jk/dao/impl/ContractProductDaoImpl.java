@@ -4,6 +4,7 @@ import cn.itcast.jk.dao.ContractProductDao;
 import cn.itcast.jk.domain.ContractProduct;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -14,5 +15,16 @@ public class ContractProductDaoImpl extends BaseDaoImpl<ContractProduct> impleme
     public ContractProductDaoImpl() {
         super.setNs("cn.itcast.jk.mapper.ContractProductMapper");
     }
+
+    @Override
+    public void deleteByContractProductById(Serializable[] ids) {
+        super.getSqlSession().delete(super.getNs()+".deleteByContractProductById",ids);
+    }
+
+    @Override
+    public void deleteByContractId(Serializable[] ids) {
+        super.getSqlSession().delete(super.getNs()+".deleteByContractId",ids);
+    }
+
 
 }

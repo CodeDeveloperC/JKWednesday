@@ -59,7 +59,7 @@
           #{cnumber},
           #{outcnumber},
           #{loadingRate},
-          #{boxNum},
+          #{boxNum, jdbcType=INTEGER},
           #{packingUnit},
           #{price},
           #{amount},
@@ -102,6 +102,15 @@
     <delete id="delete" parameterType="string">
         DELETE FROM contract_product_c
         WHERE CONTRACT_PRODUCT_ID IN
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--级联删除，删除货物前，先删除附件,通过外键将自己干掉-->
+    <delete id="deleteByContractId" parameterType="string">
+        DELETE FROM contract_product_c
+        WHERE CONTRACT_ID IN
         <foreach collection="array" item="id" open="(" close=")" separator=",">
             #{id}
         </foreach>
