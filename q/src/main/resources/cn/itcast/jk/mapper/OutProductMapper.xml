@@ -8,7 +8,7 @@
     <resultMap id="OutProductRM" type="cn.itcast.jk.vo.OutProductVO">
         <result property="customName" column="CUSTOM_NAME"/>
         <result property="contractNo" column="CONTRACT_NO"/>
-        <result property="factoryName" column="PRODUCT_NO"/>
+        <result property="productNo" column="PRODUCT_NO"/>
         <result property="cnumber" column="CNUMBER"/>
         <result property="factoryName" column="FACTORY_NAME"/>
         <result property="exts" column="EXTS"/>
