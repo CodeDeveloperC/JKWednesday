@@ -2,6 +2,7 @@ package cn.itcast.jk.controller.cargo.Contract;
 
 import cn.itcast.jk.controller.BaseController;
 import cn.itcast.jk.domain.Contract;
+import cn.itcast.jk.print.ContractPrint;
 import cn.itcast.jk.service.ContractService;
 import cn.itcast.jk.vo.ContractVO;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -86,5 +89,14 @@ public class ContractController extends BaseController {
         contractService.cancel(id);
 
         return "redirect:/cargo/contract/list.action";//转向列表的action
+    }
+
+    //打印
+    @RequestMapping("/cargo/contract/print.action")
+    public void print(String id, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        ContractPrint contractPrint = new ContractPrint();
+
+        ContractVO obj = contractService.view(id);
+        contractPrint.print(obj,request.getSession().getServletContext().getRealPath("/"),response);
     }
 }

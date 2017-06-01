@@ -1,7 +1,5 @@
 package cn.itcast.jk.vo;
 
-import cn.itcast.jk.domain.ContractProduct;
-
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +9,7 @@ import java.util.List;
 public class ContractVO {
     private String id;
 
-    private List<ContractProduct> contractProducts;
+    private List<ContractProductVO> contractProducts;
 
     private String cpnum;
     private String extnum;
@@ -232,11 +230,11 @@ public class ContractVO {
         this.createTime = createTime;
     }
 
-    public List<ContractProduct> getContractProducts() {
+    public List<ContractProductVO> getContractProducts() {
         return contractProducts;
     }
 
-    public void setContractProducts(List<ContractProduct> contractProducts) {
+    public void setContractProducts(List<ContractProductVO> contractProducts) {
         this.contractProducts = contractProducts;
     }
 }
