@@ -43,4 +43,43 @@ public class ExportController extends BaseController {
 
         return "redirect:/cargo/export/list.action";
     }
+
+    //报运修改
+    @RequestMapping("/cargo/export/toupdate.action")
+    public String toupdate(String id,Model model){
+        Export obj = exportService.get(id);
+        model.addAttribute("obj",obj);
+        //准备批量修改控件的数据
+        model.addAttribute("mRecordData",exportService.getMrecordData(id));
+
+        return "/cargo/export/JExportUpdate.jsp";
+    }
+
+    //写入数据库
+    @RequestMapping("/cargo/export/update.action")
+    public String update(Export export,
+                         String[] mr_id,
+                         Integer[] mr_orderNo,
+                         Integer[] mr_cnumber,
+                         Double[] mr_grossWeight,
+                         Double[] mr_netWeight,
+                         Double[] mr_sizeLength,
+                         Double[] mr_sizeHeight,
+                         Double[] mr_exPrice,
+                         Double[] mr_tax,
+                         Integer[] mr_changed
+    ){
+        exportService.update(export,mr_id,
+                mr_orderNo,
+                mr_cnumber,
+                mr_grossWeight,
+                mr_netWeight,
+                mr_sizeLength,
+                mr_sizeHeight,
+                mr_exPrice,
+                mr_tax,
+                mr_changed);
+
+        return "redirect:/cargo/export/list.action";
+    }
 }

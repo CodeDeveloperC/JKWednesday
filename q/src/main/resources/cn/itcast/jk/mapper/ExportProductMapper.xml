@@ -28,9 +28,11 @@
         <result property="orderNo" column="ORDER_NO"/>
     </resultMap>
 
+    <!--查询某个报运下的货物信息-->
     <select id="find" parameterType="map" resultMap="ExportProductRM">
         SELECT * FROM export_product_c
         WHERE 1=1
+        <if test="exportId!=null">and export_id=#{exportId}</if>
     </select>
 
     <select id="get" parameterType="map" resultMap="ExportProductRM">

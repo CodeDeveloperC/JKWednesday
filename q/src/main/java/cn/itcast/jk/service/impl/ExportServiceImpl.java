@@ -66,7 +66,7 @@ public class ExportServiceImpl implements ExportService {
         String contractNos = "";
         for (int i = 0; i < contractIds.length; i++) {
             ContractVO contractVO = contractDao.view(contractIds[i]);
-            contractNos += contractVO.getContractNo()+" "; //以空格为分隔符
+            contractNos += contractVO.getContractNo() + " "; //以空格为分隔符
         }
         contractNos = UtilFuns.delLastChar(contractNos);//工具类，删除最后一个字符（此处为空格）
 
@@ -85,8 +85,8 @@ public class ExportServiceImpl implements ExportService {
         for (int i = 0; i < contractIds.length; i++) {
             ContractVO contractVO = contractDao.view(contractIds[i]);
 
-            for (ContractProductVO contractProductVO:contractVO.getContractProducts()
-                 ) {
+            for (ContractProductVO contractProductVO : contractVO.getContractProducts()
+                    ) {
                 ExportProduct exportProduct = new ExportProduct();
                 exportProduct.setId(UUID.randomUUID().toString());//分次报运，ID不能重复
                 exportProduct.setExportId(export.getId()); //绑定外键
@@ -103,12 +103,12 @@ public class ExportServiceImpl implements ExportService {
                 exportProductDao.insert(exportProduct);
 
                 //处理附件信息
-                for (ExtCproductVO extCproductVO:contractProductVO.getExtCproducts()
-                     ) {
+                for (ExtCproductVO extCproductVO : contractProductVO.getExtCproducts()
+                        ) {
                     ExtEproduct extEproduct = new ExtEproduct();
 
                     //copyProperties spring
-                    BeanUtils.copyProperties(extCproductVO,extEproduct);//spring工具类，数据的拷贝
+                    BeanUtils.copyProperties(extCproductVO, extEproduct);//spring工具类，数据的拷贝
 
                     extEproduct.setId(UUID.randomUUID().toString());
                     extEproduct.setExportProductId(exportProduct.getId()); //绑定外键
@@ -123,8 +123,37 @@ public class ExportServiceImpl implements ExportService {
     }
 
     @Override
-    public void update(Export contract) {
+    public void update(Export contract,
+                       String[] mr_id,
+                       Integer[] mr_orderNo,
+                       Integer[] mr_cnumber,
+                       Double[] mr_grossWeight,
+                       Double[] mr_netWeight,
+                       Double[] mr_sizeLength,
+                       Double[] mr_sizeHeight,
+                       Double[] mr_exPrice,
+                       Double[] mr_tax,
+                       Integer[] mr_changed) {
         exportDao.update(contract);
+        //批量修改货物信息
+
+        for (int i = 0; i < mr_id.length; i++) {
+            if (mr_changed[i] != null && mr_changed[i] == 1) {//修改标识，按行计算，只有用户修改的行才进行更新
+                ExportProduct exportProduct = exportProductDao.get(mr_id[i]);
+                exportProduct.setOrderNo(mr_orderNo[i]);
+                exportProduct.setCnumber(mr_cnumber[i]);
+                exportProduct.setGrossWeight(mr_grossWeight[i]);
+                exportProduct.setNetWeight(mr_netWeight[i]);
+                exportProduct.setSizeLength(mr_sizeLength[i]);
+                exportProduct.setSizeHeight(mr_sizeHeight[i]);
+                exportProduct.setExPrice(mr_exPrice[i]);
+                exportProduct.setTax(mr_tax[i]);
+
+                exportProductDao.update(exportProduct);
+            }
+
+        }
+
     }
 
     @Override
@@ -161,4 +190,45 @@ public class ExportServiceImpl implements ExportService {
         paraMap.put("state", 1);//1表示查询已上报的
         return contractDao.find(paraMap);
     }
+
+    @Override
+    public String getMrecordData(String exportId) {
+        Map paraMap = new HashMap();
+        paraMap.put("exportId", exportId);
+
+        List<ExportProduct> oList = exportProductDao.find(paraMap);
+
+        StringBuffer stringBuffer = new StringBuffer();
+        for (ExportProduct exportProduct :
+                oList) {
+            stringBuffer.append("addTRRecord(\"mRecordTable\",\"").append(exportProduct.getId()).append("\",\"").
+                    append(exportProduct.getProductNo()).append("\", \"").append(exportProduct.getCnumber()).append("\", \"").
+                    append(UtilFuns.convertNull(exportProduct.getGrossWeight())).append("\", \"").
+                    append(UtilFuns.convertNull(exportProduct.getNetWeight())).append("\", \"").
+                    append(UtilFuns.convertNull(exportProduct.getSizeLength())).append("\", \"").
+                    append(UtilFuns.convertNull(exportProduct.getSizeWidth())).append("\", \"").
+                    append(UtilFuns.convertNull(exportProduct.getSizeHeight())).append("\", \"").
+                    append(UtilFuns.convertNull(exportProduct.getExPrice())).append("\", \"").
+                    append(UtilFuns.convertNull(exportProduct.getTax())).append("\");");
+        }
+
+        return stringBuffer.toString();
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

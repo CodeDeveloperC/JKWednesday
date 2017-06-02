@@ -20,7 +20,17 @@ public interface ExportService {
 
     void insert(String[] contractIds) ;                  //插入，用实体作为参数
 
-    void update(Export contract);                    //修改，用实体作为参数
+    void update(Export contract,
+                String[] mr_id,
+                Integer[] mr_orderNo,
+                Integer[] mr_cnumber,
+                Double[] mr_grossWeight,
+                Double[] mr_netWeight,
+                Double[] mr_sizeLength,
+                Double[] mr_sizeHeight,
+                Double[] mr_exPrice,
+                Double[] mr_tax,
+                Integer[] mr_changed);                    //修改，用实体作为参数
 
     void deleteById(Serializable id);        //按id删除，删除一条；支持整数型和字符串类型ID
 
@@ -31,4 +41,6 @@ public interface ExportService {
     void cancel(Serializable[] ids);       //取消
 
     List<Contract> getContractList(); //获取购销合同列表(已上报)
+
+    String getMrecordData(String exportId);//拼接js串
 }
