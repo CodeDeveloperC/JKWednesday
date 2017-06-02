@@ -2,12 +2,19 @@ package cn.itcast.jk.service.impl;
 
 import cn.itcast.jk.dao.ContractDao;
 import cn.itcast.jk.dao.ExportDao;
+import cn.itcast.jk.dao.ExportProductDao;
+import cn.itcast.jk.dao.ExtEproductDao;
 import cn.itcast.jk.domain.Contract;
 import cn.itcast.jk.domain.Export;
+import cn.itcast.jk.domain.ExportProduct;
+import cn.itcast.jk.domain.ExtEproduct;
 import cn.itcast.jk.pagination.Page;
 import cn.itcast.jk.service.ExportService;
+import cn.itcast.jk.vo.ContractProductVO;
 import cn.itcast.jk.vo.ContractVO;
+import cn.itcast.jk.vo.ExtCproductVO;
 import cn.itcast.util.UtilFuns;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +33,10 @@ public class ExportServiceImpl implements ExportService {
     ExportDao exportDao;
     @Resource
     ContractDao contractDao;
+    @Resource
+    ExportProductDao exportProductDao;
+    @Resource
+    ExtEproductDao extEproductDao;
 
     @Override
     public List<Export> findPage(Page page) {
@@ -66,19 +77,49 @@ public class ExportServiceImpl implements ExportService {
         export.setContractIds(UtilFuns.joinStr(contractIds, ","));//工具类，拼串
         export.setCustomerContract(contractNos);
 
-        export.setState(0);//0，草稿
+        export.setState(0);//0，默认为草稿
 
         exportDao.insert(export);
 
         //处理货物信息
-//        for (int i = 0; i < contractIds.length; i++) {
-//            ContractVO contractVO = contractDao.view(contractIds[i]);
-//
-//            for (ContractProductVO cp:contractVO.getContractProducts()
-//                 ) {
-//                Exportp
-//            }
-//        }
+        for (int i = 0; i < contractIds.length; i++) {
+            ContractVO contractVO = contractDao.view(contractIds[i]);
+
+            for (ContractProductVO contractProductVO:contractVO.getContractProducts()
+                 ) {
+                ExportProduct exportProduct = new ExportProduct();
+                exportProduct.setId(UUID.randomUUID().toString());//分次报运，ID不能重复
+                exportProduct.setExportId(export.getId()); //绑定外键
+
+                //数据搬家，将合同下的对应的货物信息写入到报运下的货物信息中
+                exportProduct.setFactoryId(contractProductVO.getFactory().getId());
+                exportProduct.setFactoryName(contractProductVO.getFactory().getFactoryName());
+                exportProduct.setProductNo(contractProductVO.getProductNo());
+                exportProduct.setPackingUnit(contractProductVO.getPackingUnit());
+                exportProduct.setCnumber(contractProductVO.getCnumber());
+                exportProduct.setBoxNum(contractProductVO.getBoxNum());
+                exportProduct.setPrice(contractProductVO.getPrice());
+
+                exportProductDao.insert(exportProduct);
+
+                //处理附件信息
+                for (ExtCproductVO extCproductVO:contractProductVO.getExtCproducts()
+                     ) {
+                    ExtEproduct extEproduct = new ExtEproduct();
+
+                    //copyProperties spring
+                    BeanUtils.copyProperties(extCproductVO,extEproduct);//spring工具类，数据的拷贝
+
+                    extEproduct.setId(UUID.randomUUID().toString());
+                    extEproduct.setExportProductId(exportProduct.getId()); //绑定外键
+
+                    extEproduct.setFactoryId(extCproductVO.getFactory().getId());
+                    extEproduct.setFactoryName(extCproductVO.getFactory().getFactoryName());
+
+                    extEproductDao.insert(extEproduct);
+                }
+            }
+        }
     }
 
     @Override

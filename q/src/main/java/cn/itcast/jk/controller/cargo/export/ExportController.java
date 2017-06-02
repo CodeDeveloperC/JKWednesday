@@ -7,6 +7,7 @@ import cn.itcast.jk.service.ExportService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,5 +34,13 @@ public class ExportController extends BaseController {
         List<Contract> dataList = exportService.getContractList();
         model.addAttribute("dataList",dataList);
         return "/cargo/export/JContractList.jsp"; //报运目录下调用购销合同列表
+    }
+
+    //报运新增，直接进行后台保存
+    @RequestMapping("/cargo/export/insert.action")
+    public String insert(@RequestParam("id")String[] contractIds){
+        exportService.insert(contractIds);
+
+        return "redirect:/cargo/export/list.action";
     }
 }

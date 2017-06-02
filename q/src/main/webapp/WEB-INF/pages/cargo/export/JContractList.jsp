@@ -19,7 +19,7 @@
 
                         <li id="view"><a href="#" onclick="formSubmit('${ctx}/cargo/contract/toview.action','_self');this.blur();">查看</a></li>
                         <li id="print"><a href="#" onclick="formSubmit('${ctx}/cargo/contract/print.action','_self');this.blur();">打印</a></li>
-                        <li id="print"><a href="#" onclick="formSubmit('${ctx}/cargo/export/tocreate.action','_self');this.blur();">报运</a></li>
+                        <li id="new"><a href="#" onclick="formSubmit('${ctx}/cargo/export/insert.action','_self');this.blur();">报运</a></li>
 
                     </ul>
                 </div>

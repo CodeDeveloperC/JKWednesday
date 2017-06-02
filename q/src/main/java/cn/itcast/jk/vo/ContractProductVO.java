@@ -1,7 +1,6 @@
 package cn.itcast.jk.vo;
 
 import cn.itcast.jk.domain.Contract;
-import cn.itcast.jk.domain.ExtCproduct;
 import cn.itcast.jk.domain.Factory;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public class ContractProductVO {
     private String id;
 
     private Contract contract;  //将复杂的关联关系变成单表操作
-    private List<ExtCproduct> extCproducts; //和附件一对多
+    private List<ExtCproductVO> extCproducts; //和附件一对多
     private Factory factory;    //和生产厂家多对一
 
     private String productNo;
@@ -151,11 +150,11 @@ public class ContractProductVO {
         this.contract = contract;
     }
 
-    public List<ExtCproduct> getExtCproducts() {
+    public List<ExtCproductVO> getExtCproducts() {
         return extCproducts;
     }
 
-    public void setExtCproducts(List<ExtCproduct> extCproducts) {
+    public void setExtCproducts(List<ExtCproductVO> extCproducts) {
         this.extCproducts = extCproducts;
     }
 
