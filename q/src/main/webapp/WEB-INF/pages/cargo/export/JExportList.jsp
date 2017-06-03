@@ -22,6 +22,7 @@
                         <li id="delete"><a href="#" onclick="formSubmit('delete.action','_self');this.blur();">删除</a></li>
                         <li id="new"><a href="#" onclick="formSubmit('submit.action','_self');this.blur();">上报</a></li>
                         <li id="new"><a href="#" onclick="formSubmit('cancel.action','_self');this.blur();">取消</a></li>
+                        <li id="new"><a href="#" onclick="formSubmit('${ctx}/cargo/packinglist/tocreate.action','_self');this.blur();">装箱</a></li>
 
                     </ul>
                 </div>
