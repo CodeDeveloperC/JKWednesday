@@ -19,7 +19,7 @@
     <!--1.包扫描-->
     <context:component-scan base-package="cn.itcast.jk.controller"/>
 
-    <!-- 2.内部资源视图解析器-->
+    <!-- 2.内部资源视图解析器,拦截下action，直接进入/WEB-INF/pages这个目录下-->
     <bean id="JspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages"/>
         <property name="suffix" value=""/>
