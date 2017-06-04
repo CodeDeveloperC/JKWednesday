@@ -63,11 +63,11 @@ public class PackingList {
         this.invoiceDate = invoiceDate;
     }
 
-    public String getMark() {
+    public String getMarks() {
         return marks;
     }
 
-    public void setMark(String marks) {
+    public void setMarks(String marks) {
         this.marks = marks;
     }
 

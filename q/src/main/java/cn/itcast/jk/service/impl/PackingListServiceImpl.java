@@ -88,7 +88,7 @@ public class PackingListServiceImpl implements PackingListService {
 
         String[] _s = packingList.getExportIds().split(",");
         for (int i = 0; i < _s.length; i++) {
-            String[] _tmp = _s[i].split("\\|");
+            String[] _tmp = _s[i].split("\\|");//正则表达式，转义
             _exportIds += _tmp[0] + "|";
             _exportNos += _tmp[1] + "|";
         }
@@ -109,6 +109,28 @@ public class PackingListServiceImpl implements PackingListService {
             Export export = exportDao.get(exportIds[i]);
             stringBuffer.append("<input type=\"checkbox\" name=\"exportIds\" checked value=\"").append(exportIds[i]).append("|").append(export.getCustomerContract()).append("\" class=\"input\"/>");
             stringBuffer.append(export.getCustomerContract()).append("&nbsp;&nbsp;");
+        }
+
+        return stringBuffer.toString();
+    }
+
+    //拼接一个HTML片段
+    public String getDivDataUpdate(String[] exportIds,String[] exportNos){
+        StringBuffer stringBuffer = new StringBuffer();
+
+        for (int i = 0; i < exportIds.length; i++) {
+            stringBuffer.append("<input type=\"checkbox\" name=\"exportIds\" checked value=\"").
+                    append(exportIds[i]).append("|").append(exportNos[i]).append("\" class=\"input\"/>");
+            stringBuffer.append(exportNos[i]).append("&nbsp;&nbsp");
+        }
+
+        return stringBuffer.toString();
+    }
+
+    public String getDivDataView(String[] exportNos){
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < exportNos.length; i++) {
+            stringBuffer.append(exportNos[i]).append("&nbsp;&nbsp");
         }
 
         return stringBuffer.toString();

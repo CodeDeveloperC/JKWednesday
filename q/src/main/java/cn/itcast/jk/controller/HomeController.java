@@ -52,10 +52,22 @@ public class HomeController {
 	public String baseinfoMain(){
 		return "/baseinfo/main.jsp";
 	}
-	
+
 	@RequestMapping("/baseinfoLeft.action")
 	public String baseinfoLeft(){
 		return "/baseinfo/left.jsp";
+	}
+
+	//统计分析
+
+	@RequestMapping("/statMain.action")
+	public String statMain(){
+		return "/stat/main.jsp";
+	}
+
+	@RequestMapping("/statLeft.action")
+	public String statLeft(){
+		return "/stat/left.jsp";
 	}
 	
 	//货运管理模块

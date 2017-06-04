@@ -30,4 +30,8 @@ public interface PackingListService {
     void cancel(Serializable[] ids);       //取消
 
     String getDivDataCreate(String[] exportIds);//获取div，展示数据
+
+    String getDivDataUpdate(String[] exportIds, String[] exportNos);
+
+    String getDivDataView(String[] exportNos);
 }
